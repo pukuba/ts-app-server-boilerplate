@@ -1,5 +1,5 @@
-import { Resolvers } from "../../__generated__/typings";
-import { createUnknownError } from "../../utils/error";
+import { Resolvers } from "@graphql/__generated__";
+import { createUnknownError } from "@graphql/utils/error";
 
 export const Mutation: Resolvers["Mutation"] ={
   throw: (parent, args, context, info) => {

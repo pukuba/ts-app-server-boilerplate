@@ -46,6 +46,7 @@ module.exports = {
     extensions: ['.js', '.mjs', '.ts'],
     alias: {
       '~': path.resolve('./src'),
+      '@graphql': path.resolve('./src/graphql'),
     },
   },
   resolveLoader: {

@@ -1,6 +1,6 @@
 import { GraphQLResolveInfo } from "graphql";
 import { stackFromResolveInfo } from "./info";
-import { ErrorResolvers } from "../__generated__/typings";
+import { ErrorResolvers } from "@graphql/__generated__/typings";
 
 
 export type NodeResolveType = NonNullable<Awaited<ReturnType<ErrorResolvers["__resolveType"]>>>

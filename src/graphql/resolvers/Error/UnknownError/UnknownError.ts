@@ -1,4 +1,4 @@
-import { Resolvers } from "../../../__generated__/typings";
+import { Resolvers } from "@graphql/__generated__";
 
 export const UnknownError: Resolvers["UnknownError"] = {
   stack: (parent) => {

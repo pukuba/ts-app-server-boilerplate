@@ -14,7 +14,11 @@
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "sourceMap": true,
-      "declaration": false
+      "declaration": false,
+      "paths": {
+        "~/*": ["./src/*"],
+        "@graphql/*": ["./src/graphql/*"],
+      }
   },
   "include": ["./src/**/*.ts"],
   "exclude": [".vscode", ".yarn", ".pnp.cjs", ".pnp.loader.mjs", "dist", "**/*.js"]
