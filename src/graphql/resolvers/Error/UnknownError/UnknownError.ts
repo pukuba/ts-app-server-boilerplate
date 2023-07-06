@@ -1,7 +1,7 @@
 import { Resolvers } from "../../../__generated__/typings";
 
-export const GraphQLError: Resolvers["UnknownError"] = {
+export const UnknownError: Resolvers["UnknownError"] = {
   stack: (parent) => {
     return parent.stack ?? null
-  }
+  },
 }

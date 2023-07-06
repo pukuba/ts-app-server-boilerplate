@@ -1,1 +1,1 @@
-export { default as typeDefs } from './typeDefs'
+export { default as typeDefs } from "./typeDefs"

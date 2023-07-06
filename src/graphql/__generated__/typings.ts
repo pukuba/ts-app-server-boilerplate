@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLError } from '../utils';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -116,7 +117,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  Error: ResolverTypeWrapper<Error>;
+  Error: ResolverTypeWrapper<GraphQLError>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -126,7 +127,7 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
-  Error: Error;
+  Error: GraphQLError;
   Mutation: {};
   Query: {};
   String: Scalars['String']['output'];

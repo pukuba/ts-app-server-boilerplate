@@ -17,7 +17,7 @@ generates:
     config:
       noNamespaces: true
       mappers:
-        Error: Error
+        Error: ../utils#GraphQLError
   src/graphql/__generated__/typeDefs.ts:
     overwrite: true
     schema:

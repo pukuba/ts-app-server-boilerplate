@@ -7,5 +7,5 @@ export const Error: Resolvers["Error"] = {
   name: (parent) => {
     return parent.name
   },
-  __resolveType: () => "UnknownError"
+  __resolveType: (parent) => parent.resolveType,
 }
