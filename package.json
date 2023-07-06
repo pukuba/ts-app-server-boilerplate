@@ -1,0 +1,59 @@
+{
+  "name": "ts-app-server-boilerplate",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "https://github.com/pukuba/ts-app-server-boilerplate.git",
+  "author": "SeungWon <pukuba@kakao.com>",
+  "license": "MIT",
+  "packageManager": "yarn@3.6.1",
+  "scripts": {
+    "lint": "eslint --ext .ts \"./src/**/*.ts\"",
+    "ci:lint": "eslint --ext .ts \"./src/**/*.ts\" --output-file eslint_report.json --format json",
+    "dev": "nodemon",
+    "build:dev": "yarn clean && webpack-cli --config ./webpack/dev.js",
+    "build": "yarn clean &&  webpack-cli --config ./webpack/build.js",
+    "clean": "rimraf ./dist && rimraf ./node_modules && rimraf ./tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "fastify": "^4.19.2",
+    "graphql": "^16.7.1",
+    "mercurius": "^13.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.8",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-typescript": "^7.22.5",
+    "@types/node": "^20.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "babel-loader": "^9.1.2",
+    "babel-plugin-lodash": "^3.3.4",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "nodemon": "^2.0.22",
+    "pnp-webpack-plugin": "^1.7.0",
+    "prettier": "^3.0.0",
+    "raw-loader": "^4.0.2",
+    "rimraf": "^5.0.1",
+    "simple-progress-webpack-plugin": "^2.0.0",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-pnp-externals": "^1.1.0"
+  },
+  "nodemonConfig": {
+    "exec": "yarn build:dev && node ./dist/index.js",
+    "ext": "ts,tsx",
+    "ignore": [
+      "**/dist/**",
+      "**/node_modules/**"
+    ],
+    "watch": "src"
+  }
+}
