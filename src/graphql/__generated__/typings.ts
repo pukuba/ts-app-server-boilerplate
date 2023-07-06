@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { GraphQLError } from '../utils';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: Date|string; output: Date|string; }
 };
 
 export type Error = {
@@ -35,13 +36,28 @@ export type Query = {
   ping: Scalars['Boolean']['output'];
 };
 
+/**
+ * UnknownError represents a type of error that cannot be categorized into a more specific type.
+ * This is the fallback error type for unforeseen issues.
+ */
 export type UnknownError = Error & {
   __typename?: 'UnknownError';
-  /** Error message */
+  /**
+   * createdAt is the timestamp at which the error was thrown.
+   * This can be useful for logging, debugging, and tracing error occurrences over time.
+   */
+  createdAt: Scalars['DateTime']['output'];
+  /**
+   * message is a detailed human-readable explanation of the error.
+   * It's intended to help developers understand and address the error.
+   */
   message: Scalars['String']['output'];
-  /** Error name */
+  /** name is the name of the error. */
   name: Scalars['String']['output'];
-  /** Stack trace */
+  /**
+   * stack represents the stack trace of the error.
+   * It gives more technical details about where and why the error was thrown, which can be helpful for debugging.
+   */
   stack?: Maybe<Scalars['String']['output']>;
 };
 
@@ -113,26 +129,36 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = {
+  Error: ( GraphQLError );
+};
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  Error: ResolverTypeWrapper<GraphQLError>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
+  Error: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Error']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  UnknownError: ResolverTypeWrapper<UnknownError>;
+  UnknownError: ResolverTypeWrapper<GraphQLError>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
-  Error: GraphQLError;
+  DateTime: Scalars['DateTime']['output'];
+  Error: ResolversInterfaceTypes<ResolversParentTypes>['Error'];
   Mutation: {};
   Query: {};
   String: Scalars['String']['output'];
-  UnknownError: UnknownError;
+  UnknownError: GraphQLError;
 };
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
 
 export type ErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = {
   __resolveType: TypeResolveFn<'UnknownError', ParentType, ContextType>;
@@ -149,6 +175,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type UnknownErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['UnknownError'] = ResolversParentTypes['UnknownError']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   stack?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -156,6 +183,7 @@ export type UnknownErrorResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type Resolvers<ContextType = any> = {
+  DateTime?: GraphQLScalarType;
   Error?: ErrorResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

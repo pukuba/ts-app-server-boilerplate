@@ -17,7 +17,9 @@ generates:
     config:
       noNamespaces: true
       mappers:
-        Error: ../utils#GraphQLError
+        UnknownError: ../utils#GraphQLError
+      scalars:
+        DateTime: Date|string
   src/graphql/__generated__/typeDefs.ts:
     overwrite: true
     schema:

@@ -4,4 +4,7 @@ export const UnknownError: Resolvers["UnknownError"] = {
   stack: (parent) => {
     return parent.stack ?? null
   },
+  createdAt: () => {
+    return new Date()
+  },
 }

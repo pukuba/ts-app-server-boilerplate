@@ -18,6 +18,8 @@
       "paths": {
         "~/*": ["./src/*"],
         "@graphql/*": ["./src/graphql/*"],
+        "@common/*": ["./src/common/*"],
+        "@lib/*": ["./src/common/lib/*"],
       }
   },
   "include": ["./src/**/*.ts"],

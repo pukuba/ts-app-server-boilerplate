@@ -4,7 +4,7 @@ import { Query } from "./Query"
 
 import { Mutation } from "./Mutation"
 
-import { Error } from "./Error"
+import { Error,UnknownError } from "./Error"
 
 export const resolvers: Resolvers = {
   Query: {
@@ -14,4 +14,5 @@ export const resolvers: Resolvers = {
     ...Mutation,
   },
   Error,
+  UnknownError,
 }

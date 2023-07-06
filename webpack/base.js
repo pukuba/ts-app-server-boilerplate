@@ -47,6 +47,8 @@ module.exports = {
     alias: {
       '~': path.resolve('./src'),
       '@graphql': path.resolve('./src/graphql'),
+      '@common': path.resolve('./src/common'),
+      '@lib': path.resolve('./src/common/lib'),
     },
   },
   resolveLoader: {

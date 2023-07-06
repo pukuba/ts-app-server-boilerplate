@@ -1,12 +1,10 @@
-import { makeExecutableSchema } from "@graphql-tools/schema"
-import { typeDefs } from "./__generated__"
-import { resolvers } from "./resolvers"
 import { FastifyInstance } from "fastify"
 import mercurius from "mercurius"
+import { schema } from "./schema"
 
 export const mercuriusRegister = (app: FastifyInstance): void => {
   app.register(mercurius, {
-    schema: makeExecutableSchema({typeDefs, resolvers, inheritResolversFromInterfaces: true}),
+    schema,
     jit: 100,
     graphiql: true,
   })

@@ -1,3 +1,5 @@
+import "@lib/dotenv"
+
 import fastify from "fastify"
 import { mercuriusRegister } from "./graphql"
 

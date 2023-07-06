@@ -13,8 +13,8 @@ export type GraphQLError = Error & IGraphQLError
 
 export const createUnknownError = (name: string, message: string, info: GraphQLResolveInfo): GraphQLError => {
   return {
-    message,
     name,
+    message,
     stack: stackFromResolveInfo(info).join(" > "),
     resolveType: "UnknownError",
   } as const
