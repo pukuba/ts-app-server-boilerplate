@@ -1,0 +1,16 @@
+type UnknownError implements Error {
+  """
+  Error name
+  """
+  name: String!
+
+  """
+  Error message
+  """
+  message: String!
+
+  """
+  Stack trace
+  """
+  stack: String
+}

@@ -28,11 +28,12 @@
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/return-await": "error",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_"} ],
+    "@typescript-eslint/interface-name-prefix": "always",
     "@typescript-eslint/naming-convention": [
       "error",
       {
           "selector": "variableLike",
-          "format": ["camelCase"],
+          "format": ["camelCase", "PascalCase"],
           "filter": {
             "regex": "^_",
             "match": false
@@ -125,7 +126,7 @@
       }
     }
   ],
-  "ignorePatterns": ["dist", ".yarn", ".vscode", ".pnp.cjs", ".pnp.loader.mjs", "webpack"],
+  "ignorePatterns": ["dist", ".yarn", ".vscode", ".pnp.cjs", ".pnp.loader.mjs", "webpack", "typeDefs.ts", "typings.ts"],
   "globals": {
     "BigInt": true
   }

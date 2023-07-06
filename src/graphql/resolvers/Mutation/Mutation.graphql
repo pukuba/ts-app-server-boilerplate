@@ -1,0 +1,6 @@
+type Mutation {
+  """
+  Throw an error
+  """
+  throw: Error!
+}

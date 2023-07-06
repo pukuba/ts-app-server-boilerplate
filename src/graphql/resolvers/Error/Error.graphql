@@ -1,0 +1,11 @@
+interface Error {
+  """
+  Error name
+  """
+  name: String!
+
+  """
+  Error message
+  """
+  message: String!
+}
