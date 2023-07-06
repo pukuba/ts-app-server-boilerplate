@@ -1,3 +1,15 @@
+# Lint
+eslint_report.json
+
+# Yarn berry
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Logs
 logs
 *.log
