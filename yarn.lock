@@ -5590,6 +5590,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hyperid@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "hyperid@npm:3.1.1"
+  dependencies:
+    uuid: ^8.3.2
+    uuid-parse: ^1.1.0
+  checksum: e02781cee84f4adf5a1849c8e56c3358da52302a9334f272e2d4ae1dabdbae4726369d5796d45cbc20186f43e622709a2a51cb83f34c2122c4b76846e10b9158
+  languageName: node
+  linkType: hard
+
 "iconv-lite@npm:^0.4.24":
   version: 0.4.24
   resolution: "iconv-lite@npm:0.4.24"
@@ -8830,6 +8840,7 @@ __metadata:
     graphql: ^16.7.1
     graphql-codegen: ^0.4.0
     graphql-scalars: ^1.22.2
+    hyperid: ^3.1.1
     mercurius: ^13.0.0
     nodemon: ^2.0.22
     pino: ^8.14.1
@@ -9137,6 +9148,22 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
+  languageName: node
+  linkType: hard
+
+"uuid-parse@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "uuid-parse@npm:1.1.0"
+  checksum: e522c23c2c348eacd880ec78a832f59c1feaccce6c062a5c7127af2f9e7d6cb079d3f06f059fd7e4779cd332091aa038a3bfa26c35d06d23c6f58be21b6461d5
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
   languageName: node
   linkType: hard
 
