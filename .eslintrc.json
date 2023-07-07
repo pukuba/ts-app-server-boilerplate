@@ -30,6 +30,9 @@
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/return-await": "error",
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_"} ],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "no-multi-spaces": "error",
+    "space-infix-ops": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {
