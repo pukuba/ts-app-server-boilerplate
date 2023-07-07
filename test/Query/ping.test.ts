@@ -9,6 +9,6 @@ describe("Query > ping", () => {
     `;
     const [data, errors] = await execute(query, null);
     expect(errors).toBeNull();
-    expect(data).toBe({ ping:true });
+    expect(data).toEqual({ ping: true });
   });
 });
