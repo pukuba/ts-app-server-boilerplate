@@ -1,6 +1,6 @@
 module.exports = {
   "transform": {
-    "^.+\\.ts$": "ts-jest"
+    "^.+\\.ts$": ["ts-jest", { "diagnostics": true }]
   },
   "testRegex": "\\.test\\.ts$",
   "moduleFileExtensions": [
@@ -9,11 +9,6 @@ module.exports = {
     "js",
     "json"
   ],
-  "globals": {
-    "ts-jest": {
-      "diagnostics": true
-    }
-  },
   "moduleNameMapper": {
     "^@src/(.*)$": "<rootDir>/src/$1",
     "^@graphql/(.*)$": "<rootDir>/src/graphql/$1",
