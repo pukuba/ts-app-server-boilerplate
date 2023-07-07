@@ -2,7 +2,6 @@ import { GraphQLResolveInfo } from "graphql";
 import { stackFromResolveInfo } from "./info";
 import { ErrorResolvers } from "@graphql/__generated__/typings";
 
-
 export type ErrorType = NonNullable<Awaited<ReturnType<ErrorResolvers["__resolveType"]>>>
 
 interface IGraphQLError {

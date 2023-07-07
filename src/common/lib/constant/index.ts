@@ -23,3 +23,5 @@ const constant = envSchema.parse(process.env);
 export const getConstant = <T extends keyof typeof constant>(key: T): typeof constant[T] => {
   return constant[key];
 };
+
+export type Constant = typeof constant

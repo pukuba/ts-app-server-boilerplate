@@ -2,8 +2,11 @@ import "@lib/dotenv"
 
 import fastify from "fastify"
 import { mercuriusRegister } from "./graphql"
+import { loggerOptions } from "./common/lib/logger"
 
-const app = fastify()
+const app = fastify({
+  logger: loggerOptions,
+})
 
 app.get("/healthz", (req, reply) => {
   reply.code(200).send("OK")
