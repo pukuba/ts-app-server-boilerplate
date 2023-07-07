@@ -1,7 +1,7 @@
-import { DateTimeResolver } from "graphql-scalars"
-import { makeExecutableSchema } from "@graphql-tools/schema"
-import { typeDefs } from "./__generated__"
-import { resolvers } from "./resolvers"
+import { DateTimeResolver } from "graphql-scalars";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { typeDefs } from "./__generated__";
+import { resolvers } from "./resolvers";
 
 export const schema = makeExecutableSchema({
   typeDefs: [typeDefs],
@@ -10,4 +10,4 @@ export const schema = makeExecutableSchema({
 
     DateTime: DateTimeResolver,
   },
-})
+});

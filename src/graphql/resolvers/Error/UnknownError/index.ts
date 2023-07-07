@@ -1,1 +1,1 @@
-export * from "./UnknownError"
+export * from "./UnknownError";

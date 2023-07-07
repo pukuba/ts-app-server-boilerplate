@@ -1,1 +1,1 @@
-export * from "./Mutation"
+export * from "./Mutation";

@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from "graphql";
 import { stackFromResolveInfo } from "./info";
 import { ErrorResolvers } from "@graphql/__generated__/typings";
 
-export type ErrorType = NonNullable<Awaited<ReturnType<ErrorResolvers["__resolveType"]>>>
+export type ErrorType = NonNullable<Awaited<ReturnType<ErrorResolvers["__resolveType"]>>>;
 
 interface IGraphQLError {
   resolveType: ErrorType
@@ -16,5 +16,5 @@ export const createUnknownError = (name: string, message: string, info: GraphQLR
     message,
     stack: stackFromResolveInfo(info).join(" > "),
     resolveType: "UnknownError",
-  } as const
-}
+  } as const;
+};

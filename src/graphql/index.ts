@@ -1,1 +1,1 @@
-export * from "./mercurius"
+export * from "./mercurius";

@@ -1,2 +1,2 @@
-export { default as typeDefs } from "./typeDefs"
-export * from "./typings"
+export { default as typeDefs } from "./typeDefs";
+export * from "./typings";

@@ -1,7 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.test.json"
   },
   "extends": [
     "eslint:recommended",
@@ -17,6 +17,7 @@
     "no-useless-constructor": "error",
     "quote-props": "error",
     "@typescript-eslint/ban-types": "warn",
+    "semi": ["error", "always"],
     "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-empty-interface": "error",

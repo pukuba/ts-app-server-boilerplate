@@ -1,10 +1,10 @@
-import { Resolvers } from "@graphql/__generated__"
+import { Resolvers } from "@graphql/__generated__";
 
-import { Query } from "./Query"
+import { Query } from "./Query";
 
-import { Mutation } from "./Mutation"
+import { Mutation } from "./Mutation";
 
-import { Error,UnknownError } from "./Error"
+import { Error,UnknownError } from "./Error";
 
 export const resolvers: Resolvers = {
   Query: {
@@ -15,4 +15,4 @@ export const resolvers: Resolvers = {
   },
   Error,
   UnknownError,
-}
+};
