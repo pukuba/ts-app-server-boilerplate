@@ -5,7 +5,7 @@ import { resolvers } from "./resolvers";
 
 export const schema = makeExecutableSchema({
   typeDefs: [typeDefs],
-  resolvers:{
+  resolvers: {
     ...resolvers,
 
     DateTime: DateTimeResolver,
