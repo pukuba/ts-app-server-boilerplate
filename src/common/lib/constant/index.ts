@@ -16,6 +16,7 @@ const envSchema = z.object({
     }
     return value ?? "UTC";
   }),
+  MONGO_URI: z.string().startsWith("mongodb://"),
 });
 
 const constant = envSchema.parse(process.env);
@@ -25,3 +26,5 @@ export const getConstant = <T extends keyof typeof constant>(key: T): typeof con
 };
 
 export type Constant = typeof constant
+
+export const isProd = getConstant("NODE_ENV") === "production";

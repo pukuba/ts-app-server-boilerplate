@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "../src/services/__generated__/prisma"
+  binaryTargets = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  password String
+
+  @@index([id], map: "idx_id")
+  @@index([email, password], map: "idx_email_password")
+}
