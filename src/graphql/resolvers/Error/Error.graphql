@@ -1,11 +1,6 @@
 interface Error {
   """
-  Error name
-  """
-  name: String!
-
-  """
-  Error message
+  Detailed error message.
   """
   message: String!
 }

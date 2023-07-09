@@ -3,15 +3,6 @@ UnknownError represents a type of error that cannot be categorized into a more s
 This is the fallback error type for unforeseen issues.
 """
 type UnknownError implements Error {
-  """
-  name is the name of the error.
-  """
-  name: String!
-
-  """
-  message is a detailed human-readable explanation of the error.
-  It's intended to help developers understand and address the error.
-  """
   message: String!
 
   """
