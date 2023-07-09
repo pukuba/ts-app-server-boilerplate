@@ -4,7 +4,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(["production", "alpha", "development"]).optional().transform((value) => {
+  NODE_ENV: z.enum(["production", "alpha", "development", "test"]).optional().transform((value) => {
     if(!value) {
       console.error("NODE_ENV is not defined");
     }

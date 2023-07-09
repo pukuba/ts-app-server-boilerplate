@@ -13,6 +13,6 @@ module.exports = {
     "^@src/(.*)$": "<rootDir>/src/$1",
     "^@graphql/(.*)$": "<rootDir>/src/graphql/$1",
     "^@common/(.*)$": "<rootDir>/src/common/$1",
-    "^@lib$/(.*)": "<rootDir>/src/common/lib/$1"
+    "^@lib/(.*)$": "<rootDir>/src/common/lib/$1"
   }
 }

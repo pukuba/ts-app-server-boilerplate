@@ -1,4 +1,4 @@
-import { execute, gql } from "../common";
+import { execute, gql } from "../../common";
 
 describe("Mutation > throw", () => {
   it("should return an error", async() => {

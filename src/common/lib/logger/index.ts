@@ -3,7 +3,7 @@ import { pino } from "pino";
 import { PinoLoggerOptions } from "fastify/types/logger";
 import { Stage } from "~/common/types";
 
-const debugStageLogger = (name: Exclude<Stage, "production">): PinoLoggerOptions => ({
+const debugStageLogger = (name: Exclude<Stage, "production" | "test">): PinoLoggerOptions => ({
   name,
   messageKey: "message",
   errorKey: "error",
@@ -20,6 +20,7 @@ const debugStageLogger = (name: Exclude<Stage, "production">): PinoLoggerOptions
 const envToLogger: Record<Stage, PinoLoggerOptions> = {
   development: debugStageLogger("development"),
   alpha: debugStageLogger("alpha"),
+  test: { level: "silent", crlf: true, name: "pino" },
   production: { level: "info", crlf: true, name: "pino" },
 };
 

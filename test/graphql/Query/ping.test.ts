@@ -1,4 +1,4 @@
-import { execute, gql } from "../common";
+import { execute, gql } from "../../common";
 
 describe("Query > ping", () => {
   it("should return true", async() => {
