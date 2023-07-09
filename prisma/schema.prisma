@@ -13,6 +13,8 @@ model User {
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   password String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([id], map: "idx_id")
   @@index([email, password], map: "idx_email_password")

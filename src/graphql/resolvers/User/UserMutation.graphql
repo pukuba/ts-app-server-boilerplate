@@ -1,0 +1,41 @@
+type Mutation {
+  """
+  Mutation to create a new User with the provided input.
+  """
+  createUser(
+    """
+    The input needed to create a new User.
+    """
+    input: CreateUserInput!
+  ): CreateUserResult!
+}
+
+"""
+Input type to define the information needed to create a User.
+"""
+input CreateUserInput {
+  """
+  The email of the User to be created.
+  """
+  email: Email!
+
+  """
+  The password for the User to be created.
+  """
+  password: String!
+}
+
+"""
+The payload returned when a User is successfully created.
+"""
+type CreateUserPayload {
+  """
+  The newly created User object.
+  """
+  user: User!
+}
+
+"""
+The result of the createUser mutation. It can be either a successful payload or an error.
+"""
+union CreateUserResult = UserDuplicateError | CreateUserPayload

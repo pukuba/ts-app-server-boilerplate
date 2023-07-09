@@ -1,0 +1,12 @@
+
+"""
+An error type to represent when a duplicate user is attempted to be created.
+"""
+type UserDuplicateError implements Error {
+  message: String!
+
+  """
+  Suggested actions or corrections for the error.
+  """
+  suggestion: String!
+}

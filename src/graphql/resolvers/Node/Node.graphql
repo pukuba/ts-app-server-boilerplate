@@ -1,0 +1,9 @@
+"""
+Node interface
+"""
+interface Node {
+  """
+  Global Object Identifier
+  """
+  id: ID!
+}

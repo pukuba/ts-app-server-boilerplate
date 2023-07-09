@@ -18,6 +18,7 @@ generates:
       noNamespaces: true
       mappers:
         UnknownError: ../utils#GraphQLError
+        UserDuplicateError: ../utils#GraphQLErrorWithSuggestion
       scalars:
         DateTime: Date|string
   src/graphql/__generated__/typeDefs.ts:

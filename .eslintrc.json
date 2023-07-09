@@ -141,7 +141,7 @@
       }
     }
   ],
-  "ignorePatterns": ["dist", ".yarn", ".vscode", ".pnp.cjs", ".pnp.loader.mjs", "webpack", "typeDefs.ts", "typings.ts"],
+  "ignorePatterns": ["dist", ".yarn", ".vscode", ".pnp.cjs", ".pnp.loader.mjs", "webpack", "**/__generated__/**"],
   "globals": {
     "BigInt": true
   }
