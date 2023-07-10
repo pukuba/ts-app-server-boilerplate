@@ -4,6 +4,7 @@ import { Query } from "./Query";
 
 import { Mutation } from "./Mutation";
 import { UserMutation } from "./User";
+import { Node } from "./Node";
 
 import { Error, UnknownError } from "./Error";
 
@@ -17,4 +18,5 @@ export const resolvers: Resolvers = {
   },
   Error,
   UnknownError,
+  Node,
 };

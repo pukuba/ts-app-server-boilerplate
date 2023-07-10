@@ -12,4 +12,5 @@ export const schema = makeExecutableSchema({
     Email: EmailAddressResolver,
     ObjectID: ObjectIDResolver,
   },
+  inheritResolversFromInterfaces: true,
 });
