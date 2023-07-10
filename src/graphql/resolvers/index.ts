@@ -3,6 +3,7 @@ import { Resolvers } from "@graphql/__generated__";
 import { Query } from "./Query";
 
 import { Mutation } from "./Mutation";
+import { UserMutation } from "./User";
 
 import { Error, UnknownError } from "./Error";
 
@@ -12,6 +13,7 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     ...Mutation,
+    ...UserMutation,
   },
   Error,
   UnknownError,

@@ -16,7 +16,7 @@ const envSchema = z.object({
     }
     return value ?? "UTC";
   }),
-  MONGO_URI: z.string().startsWith("mongodb://"),
+  MONGO_URI: z.string().startsWith("mongodb://").or(z.string().startsWith("mongodb+srv://")),
 });
 
 const constant = envSchema.parse(process.env);

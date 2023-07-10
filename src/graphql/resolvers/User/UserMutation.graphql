@@ -38,4 +38,4 @@ type CreateUserPayload {
 """
 The result of the createUser mutation. It can be either a successful payload or an error.
 """
-union CreateUserResult = UserDuplicateError | CreateUserPayload
+union CreateUserResult = UserDuplicateError | CreateUserPayload | UnknownError

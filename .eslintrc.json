@@ -34,11 +34,12 @@
     "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
     "no-multi-spaces": "error",
     "space-infix-ops": "error",
+    "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/naming-convention": [
       "error",
       {
           "selector": "variableLike",
-          "format": ["camelCase", "PascalCase"],
+          "format": ["camelCase", "PascalCase", "UPPER_CASE"],
           "filter": {
             "regex": "^_",
             "match": false

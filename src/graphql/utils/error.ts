@@ -6,6 +6,7 @@ export type ErrorType = NonNullable<Awaited<ReturnType<ErrorResolvers["__resolve
 
 interface IGraphQLError {
   resolveType: ErrorType
+  __typename: ErrorType
 }
 
 export type GraphQLError = Omit<IGraphQLError & Error, "name">;
@@ -16,6 +17,7 @@ export const createUnknownError = (message: string, info: GraphQLResolveInfo): G
     message,
     stack: getPathFromResolveInfo(info).join(" > "),
     resolveType: "UnknownError",
+    __typename: "UnknownError",
   } as const;
 };
 
@@ -23,6 +25,7 @@ export const createErrorWithSuggestion = (message: string, suggestion: string): 
   return {
     message,
     resolveType: "UserDuplicateError",
+    __typename: "UserDuplicateError",
     suggestion,
   } as const;
 };

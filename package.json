@@ -17,7 +17,8 @@
     "codegen": "graphql-codegen --config codegen.yml",
     "test": "jest --detectOpenHandles --forceExit",
     "lint-staged": "lint-staged",
-    "prisma:generate": "pnpify prisma generate"
+    "prisma:generate": "pnpify prisma generate",
+    "prisma:push": "pnpify prisma db push"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.0",

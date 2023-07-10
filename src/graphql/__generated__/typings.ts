@@ -1,5 +1,7 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { GraphQLError, GraphQLErrorWithSuggestion } from '../utils';
+import { User as PrismaUser } from '~/services/__generated__/prisma';
+import { MercuriusContext } from '../types';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -7,6 +9,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -36,7 +39,7 @@ export type CreateUserPayload = {
 };
 
 /** The result of the createUser mutation. It can be either a successful payload or an error. */
-export type CreateUserResult = CreateUserPayload | UserDuplicateError;
+export type CreateUserResult = CreateUserPayload | UnknownError | UserDuplicateError;
 
 export type Error = {
   /** Detailed error message. */
@@ -79,10 +82,6 @@ export type UnknownError = Error & {
    * This can be useful for logging, debugging, and tracing error occurrences over time.
    */
   createdAt: Scalars['DateTime']['output'];
-  /**
-   * message is a detailed human-readable explanation of the error.
-   * It's intended to help developers understand and address the error.
-   */
   message: Scalars['String']['output'];
   /**
    * stack represents the stack trace of the error.
@@ -91,7 +90,7 @@ export type UnknownError = Error & {
   stack?: Maybe<Scalars['String']['output']>;
 };
 
-/** User type */
+/** User type. */
 export type User = Node & {
   __typename?: 'User';
   /** The date and time when the User was created. This is typically set by the server when the User is created. */
@@ -182,20 +181,20 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping of union types */
 export type ResolversUnionTypes<RefType extends Record<string, unknown>> = {
-  CreateUserResult: ( CreateUserPayload ) | ( GraphQLErrorWithSuggestion );
+  CreateUserResult: ( Omit<CreateUserPayload, 'user'> & { user: RefType['User'] } ) | ( GraphQLError ) | ( GraphQLErrorWithSuggestion );
 };
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = {
   Error: ( GraphQLError ) | ( GraphQLErrorWithSuggestion );
-  Node: ( User );
+  Node: ( PrismaUser );
 };
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateUserInput: CreateUserInput;
-  CreateUserPayload: ResolverTypeWrapper<CreateUserPayload>;
+  CreateUserPayload: ResolverTypeWrapper<Omit<CreateUserPayload, 'user'> & { user: ResolversTypes['User'] }>;
   CreateUserResult: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['CreateUserResult']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   Email: ResolverTypeWrapper<Scalars['Email']['output']>;
@@ -207,7 +206,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UnknownError: ResolverTypeWrapper<GraphQLError>;
-  User: ResolverTypeWrapper<User>;
+  User: ResolverTypeWrapper<PrismaUser>;
   UserDuplicateError: ResolverTypeWrapper<GraphQLErrorWithSuggestion>;
 };
 
@@ -215,7 +214,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   CreateUserInput: CreateUserInput;
-  CreateUserPayload: CreateUserPayload;
+  CreateUserPayload: Omit<CreateUserPayload, 'user'> & { user: ResolversParentTypes['User'] };
   CreateUserResult: ResolversUnionTypes<ResolversParentTypes>['CreateUserResult'];
   DateTime: Scalars['DateTime']['output'];
   Email: Scalars['Email']['output'];
@@ -227,17 +226,17 @@ export type ResolversParentTypes = {
   Query: {};
   String: Scalars['String']['output'];
   UnknownError: GraphQLError;
-  User: User;
+  User: PrismaUser;
   UserDuplicateError: GraphQLErrorWithSuggestion;
 };
 
-export type CreateUserPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
+export type CreateUserPayloadResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CreateUserResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateUserResult'] = ResolversParentTypes['CreateUserResult']> = {
-  __resolveType: TypeResolveFn<'CreateUserPayload' | 'UserDuplicateError', ParentType, ContextType>;
+export type CreateUserResultResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['CreateUserResult'] = ResolversParentTypes['CreateUserResult']> = {
+  __resolveType: TypeResolveFn<'CreateUserPayload' | 'UnknownError' | 'UserDuplicateError', ParentType, ContextType>;
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -248,17 +247,17 @@ export interface EmailScalarConfig extends GraphQLScalarTypeConfig<ResolversType
   name: 'Email';
 }
 
-export type ErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = {
+export type ErrorResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = {
   __resolveType: TypeResolveFn<'UnknownError' | 'UserDuplicateError', ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['CreateUserResult'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   throw?: Resolver<ResolversTypes['Error'], ParentType, ContextType>;
 };
 
-export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
+export type NodeResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
   __resolveType: TypeResolveFn<'User', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
 };
@@ -267,18 +266,18 @@ export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'ObjectID';
 }
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   ping?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 
-export type UnknownErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['UnknownError'] = ResolversParentTypes['UnknownError']> = {
+export type UnknownErrorResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['UnknownError'] = ResolversParentTypes['UnknownError']> = {
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   stack?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+export type UserResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['Email'], ParentType, ContextType>;
   externalId?: Resolver<ResolversTypes['ObjectID'], ParentType, ContextType>;
@@ -287,13 +286,13 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type UserDuplicateErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserDuplicateError'] = ResolversParentTypes['UserDuplicateError']> = {
+export type UserDuplicateErrorResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['UserDuplicateError'] = ResolversParentTypes['UserDuplicateError']> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   suggestion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = any> = {
+export type Resolvers<ContextType = MercuriusContext> = {
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   CreateUserResult?: CreateUserResultResolvers<ContextType>;
   DateTime?: GraphQLScalarType;

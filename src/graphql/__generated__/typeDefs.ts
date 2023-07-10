@@ -18,7 +18,7 @@ type CreateUserPayload {
 """
 The result of the createUser mutation. It can be either a successful payload or an error.
 """
-union CreateUserResult = CreateUserPayload | UserDuplicateError
+union CreateUserResult = CreateUserPayload | UnknownError | UserDuplicateError
 
 scalar DateTime
 
@@ -65,11 +65,6 @@ type UnknownError implements Error {
   This can be useful for logging, debugging, and tracing error occurrences over time.
   """
   createdAt: DateTime!
-
-  """
-  message is a detailed human-readable explanation of the error.
-  It's intended to help developers understand and address the error.
-  """
   message: String!
 
   """
@@ -79,7 +74,7 @@ type UnknownError implements Error {
   stack: String
 }
 
-"""User type"""
+"""User type."""
 type User implements Node {
   """
   The date and time when the User was created. This is typically set by the server when the User is created.

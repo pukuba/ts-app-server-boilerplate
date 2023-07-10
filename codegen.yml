@@ -15,10 +15,12 @@ generates:
       - 'typescript'
       - 'typescript-resolvers'
     config:
+      contextType: ../types#MercuriusContext
       noNamespaces: true
       mappers:
         UnknownError: ../utils#GraphQLError
         UserDuplicateError: ../utils#GraphQLErrorWithSuggestion
+        User: ~/services/__generated__/prisma#User as PrismaUser
       scalars:
         DateTime: Date|string
   src/graphql/__generated__/typeDefs.ts:

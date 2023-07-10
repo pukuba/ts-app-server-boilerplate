@@ -1,5 +1,5 @@
 """
-User type
+User type.
 """
 type User implements Node {
   id: ID!
