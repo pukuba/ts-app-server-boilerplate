@@ -2881,6 +2881,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/bcryptjs@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@types/bcryptjs@npm:2.4.2"
+  checksum: 220dade7b0312b41e23ccfb15f2ddde7804eb3c7ef41db41a6c49054be1e19a15eb3dd8c8ef196494f0866307cce22ad6f3f272941387124707d81dc66155bbc
+  languageName: node
+  linkType: hard
+
 "@types/cacheable-request@npm:^6.0.1":
   version: 6.0.3
   resolution: "@types/cacheable-request@npm:6.0.3"
@@ -4173,6 +4180,13 @@ __metadata:
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
   checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
+  languageName: node
+  linkType: hard
+
+"bcryptjs@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "bcryptjs@npm:2.4.3"
+  checksum: 0e80ed852a41f5dfb1853f53ee14a7390b0ef263ce05dba6e2ef3cd919dfad025a7c21ebcfe5bc7fa04b100990edf90c7a877ff7fe623d3e479753253131b629
   languageName: node
   linkType: hard
 
@@ -10830,6 +10844,7 @@ __metadata:
     "@graphql-codegen/typescript-resolvers": ^4.0.1
     "@graphql-tools/schema": ^10.0.0
     "@prisma/client": 4.16.2
+    "@types/bcryptjs": ^2.4.2
     "@types/jest": ^29.5.2
     "@types/lodash": ^4.14.195
     "@types/node": ^20.4.0
@@ -10838,6 +10853,7 @@ __metadata:
     "@yarnpkg/pnpify": ^4.0.0-rc.48
     babel-loader: ^9.1.2
     babel-plugin-lodash: ^3.3.4
+    bcryptjs: ^2.4.3
     dotenv: ^16.3.1
     eslint: ^8.44.0
     eslint-config-prettier: ^8.8.0
