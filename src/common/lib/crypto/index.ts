@@ -15,6 +15,10 @@ export const decodeBase64 = (input: string): string => {
   return Buffer.from(input, "base64").toString("utf-8");
 };
 
+export const decodeBase64WithJSON = <T>(input: string): T => {
+  return JSON.parse(decodeBase64(input));
+};
+
 export const encodeBase64 = (input: string): string => {
   return Buffer.from(input).toString("base64");
 };

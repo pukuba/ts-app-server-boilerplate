@@ -51,6 +51,11 @@ scalar ObjectID
 
 type Query {
   """
+  Fetches an object given its ID. This is a generic method, used to fetch any type of object
+  implementing the Node interface with its unique identifier.
+  """
+  node(id: ID!): Node
+  """
   The 'ping' field serves as a simple health check for the GraphQL server.
   """
   ping: Boolean!

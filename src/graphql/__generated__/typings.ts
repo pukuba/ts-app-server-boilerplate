@@ -67,8 +67,18 @@ export type Node = {
 
 export type Query = {
   __typename?: 'Query';
+  /**
+   * Fetches an object given its ID. This is a generic method, used to fetch any type of object
+   * implementing the Node interface with its unique identifier.
+   */
+  node?: Maybe<Node>;
   /** The 'ping' field serves as a simple health check for the GraphQL server. */
   ping: Scalars['Boolean']['output'];
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID']['input'];
 };
 
 /**
@@ -267,6 +277,7 @@ export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type QueryResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
   ping?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 

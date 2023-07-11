@@ -1,0 +1,7 @@
+type Query {
+  """
+  Fetches an object given its ID. This is a generic method, used to fetch any type of object
+  implementing the Node interface with its unique identifier.
+  """
+  node(id: ID!): Node
+}
