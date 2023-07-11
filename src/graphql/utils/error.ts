@@ -5,12 +5,12 @@ import { ErrorResolvers } from "@graphql/__generated__/typings";
 export type ErrorType = NonNullable<Awaited<ReturnType<ErrorResolvers["__resolveType"]>>>;
 
 interface IGraphQLError {
-  resolveType: ErrorType
-  __typename: ErrorType
+  resolveType: ErrorType;
+  __typename: ErrorType;
 }
 
 export type GraphQLError = Omit<IGraphQLError & Error, "name">;
-export type GraphQLErrorWithSuggestion = GraphQLError & { suggestion: string };
+export type GraphQLErrorWithSuggestion = GraphQLError & { suggestion: string; };
 
 export const createUnknownError = (message: string, info: GraphQLResolveInfo): GraphQLError => {
   return {

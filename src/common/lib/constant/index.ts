@@ -25,6 +25,6 @@ export const getConstant = <T extends keyof typeof constant>(key: T): typeof con
   return constant[key];
 };
 
-export type Constant = typeof constant
+export type Constant = typeof constant;
 
 export const isProd = getConstant("NODE_ENV") === "production";
