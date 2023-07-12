@@ -7,7 +7,6 @@ describe("Mutation > throw", () => {
         throw {
           __typename
           ... on Error {
-            name
             message
           }
           ... on UnknownError {
@@ -21,7 +20,6 @@ describe("Mutation > throw", () => {
     expect(data).toEqual({
       throw: {
         __typename: "UnknownError",
-        name: "UnknownError",
         message: "UnknownError",
         stack: "throw > Mutation",
       },
