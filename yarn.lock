@@ -5843,9 +5843,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fastify@npm:^4.19.2":
-  version: 4.19.2
-  resolution: "fastify@npm:4.19.2"
+"fastify@npm:^4.20.0":
+  version: 4.20.0
+  resolution: "fastify@npm:4.20.0"
   dependencies:
     "@fastify/ajv-compiler": ^3.5.0
     "@fastify/error": ^3.2.0
@@ -5863,7 +5863,7 @@ __metadata:
     secure-json-parse: ^2.5.0
     semver: ^7.5.0
     tiny-lru: ^11.0.1
-  checksum: 64bd66dc0fc6b188dd7642af01b08d9010855155910fa158b08a74a1d38dc0908323588d9bd93077e0a9aaa8bb597580de9327ab7240c69370c6059d517e62d5
+  checksum: e3342f4744088f57c673bfa2f43fc429b3ba6b50c250d5a361a7bd2af5fd3bd5b681e602b49228a9f9011706142bcb7c94f37533e96878e49bc5b0a40080535e
   languageName: node
   linkType: hard
 
@@ -6465,7 +6465,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^16.0.0, graphql@npm:^16.7.1":
+"graphql@npm:^16.7.1":
   version: 16.7.1
   resolution: "graphql@npm:16.7.1"
   checksum: c924d8428daf0e96a5ea43e9bc3cd1b6802899907d284478ac8f705c8fd233a0a51eef915f7569fb5de8acb2e85b802ccc6c85c2b157ad805c1e9adba5a299bd
@@ -8313,15 +8313,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mercurius@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "mercurius@npm:13.0.0"
+"mercurius@npm:^13.1.0":
+  version: 13.1.0
+  resolution: "mercurius@npm:13.1.0"
   dependencies:
     "@fastify/error": ^3.0.0
     "@fastify/static": ^6.0.0
     "@fastify/websocket": ^8.0.0
     fastify-plugin: ^4.2.0
-    graphql: ^16.0.0
     graphql-jit: ^0.8.0
     mqemitter: ^5.0.0
     p-map: ^4.0.0
@@ -8334,7 +8333,7 @@ __metadata:
     ws: ^8.2.2
   peerDependencies:
     graphql: ^16.0.0
-  checksum: 307d3c4be3fa9fc3e3c44c2d02cb6685c1abb92a990f82c25b77f2e5eb66219844946b917fcbe0350bbf6f382241016204e82e18e7eff6d5398331cd3ba11c78
+  checksum: c4ee6ebdda82e2748bbc60cde922dd73ccdc5f5b329fc9596f04059b52dae46ebaf8f7685b4ee84660bd7c73b44ebc7ff0fd8463c65ef8293a3faa0bf9864865
   languageName: node
   linkType: hard
 
@@ -9268,9 +9267,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pino-pretty@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "pino-pretty@npm:10.0.1"
+"pino-pretty@npm:^10.2.0":
+  version: 10.2.0
+  resolution: "pino-pretty@npm:10.2.0"
   dependencies:
     colorette: ^2.0.7
     dateformat: ^4.6.3
@@ -9288,7 +9287,7 @@ __metadata:
     strip-json-comments: ^3.1.1
   bin:
     pino-pretty: bin.js
-  checksum: b156c066c106026cb6a555c1f6ebb6b15636ce5516917cc979a179dcb17fdaaf7361cbe6242ae8f3661e9cfa6c18c35906afde3f9511bd2ec80dc39b6693fdde
+  checksum: 8e8220ab647d11e05349adde37aac116dab1a96ce479297820475b7e2246ea5e56e3764b625c5877821ae66dcea62bdda563cc49eccbd4628c80952998068f48
   languageName: node
   linkType: hard
 
@@ -10861,7 +10860,7 @@ __metadata:
     eslint-plugin-n: ^16.0.1
     eslint-plugin-promise: ^6.1.1
     eslint-plugin-standard: ^5.0.0
-    fastify: ^4.19.2
+    fastify: ^4.20.0
     graphql: ^16.7.1
     graphql-codegen: ^0.4.0
     graphql-scalars: ^1.22.2
@@ -10870,10 +10869,10 @@ __metadata:
     jest: ^29.6.1
     lint-staged: ^13.2.3
     lodash: ^4.17.21
-    mercurius: ^13.0.0
+    mercurius: ^13.1.0
     nodemon: ^2.0.22
     pino: ^8.14.1
-    pino-pretty: ^10.0.1
+    pino-pretty: ^10.2.0
     pnp-webpack-plugin: ^1.7.0
     prettier: ^3.0.0
     prisma: ^5.0.0
@@ -10881,7 +10880,7 @@ __metadata:
     rimraf: ^5.0.1
     simple-progress-webpack-plugin: ^2.0.0
     ts-jest: ^29.1.1
-    ts-pattern: ^5.0.1
+    ts-pattern: ^5.0.4
     typescript: ^5.1.6
     webpack: ^5.88.1
     webpack-cli: ^5.1.4
@@ -10930,10 +10929,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-pattern@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "ts-pattern@npm:5.0.1"
-  checksum: 9d243bf63f6673ee7dfc75401bcb9f462130a92f753b4a9f491c47f369f1b95d7e9699daea93ce661c8b74fe25141e5518e65f21941d067158764f0213620305
+"ts-pattern@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "ts-pattern@npm:5.0.4"
+  checksum: 3325dfe42f32c7acdac15cf87a4693692f72e26d04e8aba7afa1449a4dcce0d88eb96d6514ff64f9ad69c4c7628eda2928a951a37b61abd2edc09412f1429e67
   languageName: node
   linkType: hard
 
