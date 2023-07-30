@@ -33,6 +33,11 @@ type CreateUserPayload {
   The newly created User object.
   """
   user: User!
+
+  """
+  The token that can be used to authenticate as the newly created User.
+  """
+  token: String!
 }
 
 """

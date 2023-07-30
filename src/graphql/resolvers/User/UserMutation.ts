@@ -1,11 +1,11 @@
 import { Resolvers } from "~/graphql/__generated__";
-import { createHash } from "~/common/lib/crypto";
-import { prismaTo } from "~/common";
 import { UNIQUE_CONSTRAINT_ERROR_CODE } from "~/services/prisma";
 import { createErrorWithSuggestion, createUnknownError } from "~/graphql/utils";
+import { sign, createHash, prismaTo } from "@common/lib";
+import { AuthTokenPayload } from "~/entity";
 
 export const UserMutation: Resolvers["Mutation"] = {
-  createUser: async(parent, args, context, info) => {
+  createUser: async (parent, args, context, info) => {
     const hash = await createHash(args.input.password);
     const [err, user] = await prismaTo(
       context.prisma.user.create({
@@ -15,18 +15,19 @@ export const UserMutation: Resolvers["Mutation"] = {
         },
       }),
     );
-    if(err?.code === UNIQUE_CONSTRAINT_ERROR_CODE){
+    if (err?.code === UNIQUE_CONSTRAINT_ERROR_CODE) {
       const suggestion = "Try another email";
       const message = "Email already exists";
       return createErrorWithSuggestion(message, suggestion);
     }
-    if(err || !user) {
+    if (err || !user) {
       const message = "Failed to create user";
       context.request.log.error(err);
       return createUnknownError(message, info);
     }
     return {
       user,
+      token: await sign<AuthTokenPayload>({ id: user.id, email: user.email }, "60 s"),
       __typename: "CreateUserPayload",
     };
   },

@@ -11,6 +11,9 @@ input CreateUserInput {
 
 """The payload returned when a User is successfully created."""
 type CreateUserPayload {
+  """The token that can be used to authenticate as the newly created User."""
+  token: String!
+
   """The newly created User object."""
   user: User!
 }

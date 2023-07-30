@@ -9104,6 +9104,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"paseto@npm:^3.1.4":
+  version: 3.1.4
+  resolution: "paseto@npm:3.1.4"
+  checksum: b54f781eedb75e13052b0d6f9dfb604c4472f93a55b5255a6ec598a730895b2f2d3f29681ca2a876087552d0569053bdcf64a6b9fd4e810e507a4d9670c47354
+  languageName: node
+  linkType: hard
+
 "path-case@npm:^2.1.0":
   version: 2.1.1
   resolution: "path-case@npm:2.1.1"
@@ -10871,6 +10878,7 @@ __metadata:
     lodash: ^4.17.21
     mercurius: ^13.1.0
     nodemon: ^2.0.22
+    paseto: ^3.1.4
     pino: ^8.14.1
     pino-pretty: ^10.2.0
     pnp-webpack-plugin: ^1.7.0

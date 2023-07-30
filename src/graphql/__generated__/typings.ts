@@ -34,6 +34,8 @@ export type CreateUserInput = {
 /** The payload returned when a User is successfully created. */
 export type CreateUserPayload = {
   __typename?: 'CreateUserPayload';
+  /** The token that can be used to authenticate as the newly created User. */
+  token: Scalars['String']['output'];
   /** The newly created User object. */
   user: User;
 };
@@ -241,6 +243,7 @@ export type ResolversParentTypes = {
 };
 
 export type CreateUserPayloadResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
