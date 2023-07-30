@@ -20,4 +20,4 @@ export const getPrismaService = _.memoize(async () => {
   return prismaClient;
 });
 
-export type PrismaService = ReturnType<typeof getPrismaService>;
+export type PrismaService = Awaited<ReturnType<typeof getPrismaService>>;

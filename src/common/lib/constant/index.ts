@@ -17,6 +17,15 @@ const envSchema = z.object({
   }),
   MONGO_URI: z.string().startsWith("mongodb://").or(z.string().startsWith("mongodb+srv://")),
   TOKEN_PRIVATE_KEY: z.string().length(32),
+  REDIS_HOST: z.string(),
+  REDIS_PORT: z.string().transform((value) => {
+    const port = Number(value);
+    if (isNaN(port)) {
+      console.error("REDIS_PORT is not a number");
+      return 6379;
+    }
+    return port;
+  }),
 });
 
 const constant = envSchema.parse(process.env);
