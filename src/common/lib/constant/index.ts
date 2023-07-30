@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
-
 import { z } from "zod";
 
 const envSchema = z.object({
@@ -17,7 +16,7 @@ const envSchema = z.object({
     return value ?? "UTC";
   }),
   MONGO_URI: z.string().startsWith("mongodb://").or(z.string().startsWith("mongodb+srv://")),
-  TOKEN_PRIVATE_KEY: z.string(),
+  TOKEN_PRIVATE_KEY: z.string().length(32),
 });
 
 const constant = envSchema.parse(process.env);

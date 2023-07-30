@@ -1,7 +1,7 @@
 import { Resolvers } from "~/graphql/__generated__";
 import { UNIQUE_CONSTRAINT_ERROR_CODE } from "~/services/prisma";
 import { createErrorWithSuggestion, createUnknownError } from "~/graphql/utils";
-import { sign, createHash, prismaTo } from "@common/lib";
+import { encrypt, createHash, prismaTo } from "@common/lib";
 import { AuthTokenPayload } from "~/entity";
 
 export const UserMutation: Resolvers["Mutation"] = {
@@ -27,7 +27,7 @@ export const UserMutation: Resolvers["Mutation"] = {
     }
     return {
       user,
-      token: await sign<AuthTokenPayload>({ id: user.id, email: user.email }, "60 s"),
+      token: await encrypt<AuthTokenPayload>({ id: user.id, email: user.email }, "60 s"),
       __typename: "CreateUserPayload",
     };
   },
