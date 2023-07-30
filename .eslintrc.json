@@ -47,6 +47,7 @@
     "no-multi-spaces": "error",
     "space-infix-ops": "error",
     "@typescript-eslint/type-annotation-spacing": "error",
+    "arrow-spacing": ["error", { "before": true, "after": true }],
     "@typescript-eslint/naming-convention": [
       "error",
       {
