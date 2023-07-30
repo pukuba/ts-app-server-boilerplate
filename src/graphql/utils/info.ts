@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from "graphql";
 
 export const getPathFromResolveInfo = (info: GraphQLResolveInfo): string[] => {
   const getPathKeys = (info: GraphQLResolveInfo["path"]): string[] => {
-    if(info?.prev) {
+    if (info?.prev) {
       const prevKey = getPathKeys(info.prev);
       return prevKey !== undefined ? [...prevKey, info.key.toString()] : [info.key.toString()];
     }

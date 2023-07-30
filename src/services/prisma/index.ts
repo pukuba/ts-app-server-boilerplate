@@ -5,7 +5,7 @@ import { PrismaClient } from "../__generated__/prisma";
 
 export * from "./constant";
 
-export const getPrismaService = _.memoize(async()=> {
+export const getPrismaService = _.memoize(async ()=> {
   const prismaClient = new PrismaClient({
     log: isProd ? [] : ["query", "info", "error", "warn"],
     datasources: {

@@ -6,12 +6,12 @@ export const NodeQueries: Resolvers["Query"] = {
   node: async (parent, args, context) => {
     const { id } = args;
     const nodeMeta = decodeNodeId(id);
-    if(!nodeMeta) {
+    if (!nodeMeta) {
       return null;
     }
     const { type, id: externalId } = nodeMeta;
     const node = await match(type)
-      .with("User", async() => context.prisma.user.findUnique({ where: { id: externalId } }))
+      .with("User", async () => context.prisma.user.findUnique({ where: { id: externalId } }))
       .otherwise(() => null);
     return node ? { ...node, __typename: type } : null;
   },

@@ -1,7 +1,7 @@
 import { execute, gql } from "../../common";
 
 describe("Mutation > throw", () => {
-  it("should return an error", async() => {
+  it("should return an error", async () => {
     const query = gql`
       mutation {
         throw {

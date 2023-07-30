@@ -1,7 +1,7 @@
 import { execute, gql } from "../../common";
 
 describe("Query > ping", () => {
-  it("should return true", async() => {
+  it("should return true", async () => {
     const query = gql`
       query {
         ping

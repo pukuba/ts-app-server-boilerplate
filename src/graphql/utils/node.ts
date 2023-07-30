@@ -14,7 +14,7 @@ export type NodeMetaData = {
 
 const isNodeMetaData = (input: unknown): input is NodeMetaData => {
   const parsed = NodeIdSchema.safeParse(input);
-  if(!parsed.success) {
+  if (!parsed.success) {
     logger.error(parsed.error);
   }
   return parsed.success;
@@ -29,8 +29,8 @@ export const encodeNodeId = (obj: NodeMetaData): string => {
   return encodeBase64(JSON.stringify({ ...obj }));
 };
 
-export const getNodeFromTypeName = <T extends object>(parent: T & {__typename?: NodeResolveType;}): NodeResolveType => {
-  if(parent.__typename) {
+export const getNodeFromTypeName = <T extends object>(parent: T & { __typename?: NodeResolveType; }): NodeResolveType => {
+  if (parent.__typename) {
     return parent.__typename;
   }
   throw new Error("Failed to resolve type");

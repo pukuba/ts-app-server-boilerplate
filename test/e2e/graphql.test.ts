@@ -2,7 +2,7 @@ import { app } from "../../src/app";
 import { gql } from "../common";
 
 describe("POST /graphql", () => {
-  it("should return 200 OK", async() => {
+  it("should return 200 OK", async () => {
     const query = gql`
         query {
           ping
