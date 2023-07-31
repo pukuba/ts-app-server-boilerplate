@@ -141,6 +141,7 @@
     "no-useless-escape": "off",
     "spaced-comment": "error",
     "no-self-compare": "error",
+    "array-bracket-spacing": ["error", "never"],
     "comma-dangle": ["error", "always-multiline"],
     "object-curly-spacing": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }]
