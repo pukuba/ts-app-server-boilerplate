@@ -6,3 +6,4 @@ export * from "./to";
 export * from "./paseto";
 export * from "./error";
 export * from "./time";
+export * from "./hash";
