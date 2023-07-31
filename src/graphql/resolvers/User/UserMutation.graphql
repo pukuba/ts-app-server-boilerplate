@@ -35,9 +35,14 @@ type CreateUserPayload {
   user: User!
 
   """
-  The token that can be used to authenticate as the newly created User.
+  The access token that can be used to authenticate as the newly created User.
   """
-  token: String!
+  accessToken: String!
+
+  """
+  The refresh token that can be used to refresh the token of the newly created User.
+  """
+  refreshToken: String!
 }
 
 """

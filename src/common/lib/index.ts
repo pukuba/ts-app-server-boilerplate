@@ -5,3 +5,4 @@ export * from "./logger";
 export * from "./to";
 export * from "./paseto";
 export * from "./error";
+export * from "./time";

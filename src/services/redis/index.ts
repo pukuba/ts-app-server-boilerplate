@@ -2,6 +2,8 @@ import _ from "lodash";
 import Redis, { ChainableCommander, RedisKey, RedisValue } from "ioredis";
 import { getConstant } from "~/common";
 
+type ZAddArguments = { member: string; score: number; };
+
 export const getRedisService = _.memoize(async () => {
   const redisClient = new Redis({
     host: getConstant("REDIS_HOST"),
@@ -63,6 +65,36 @@ export const getRedisService = _.memoize(async () => {
     },
     scard: async (key: RedisKey): Promise<number> => {
       return redisClient.scard(key);
+    },
+    zadd: async (key: RedisKey, scores: Array<ZAddArguments> | ZAddArguments): Promise<void> => {
+      const multi = redisClient.multi();
+      for (const { member, score } of Array.isArray(scores) ? scores : [scores]) {
+        multi.zadd(key, score, member);
+      }
+      await multi.exec();
+    },
+    zaddWithZremRangeByScore: async (key: RedisKey, scores: Array<ZAddArguments> | ZAddArguments, min: number, max: number): Promise<void> => {
+      const multi = redisClient.multi();
+      for (const { member, score } of Array.isArray(scores) ? scores : [scores]) {
+        multi.zadd(key, score, member);
+      }
+      multi.zremrangebyscore(key, min, max);
+      await multi.exec();
+    },
+    zrange: async (key: RedisKey, start: number, stop: number): Promise<string[]> => {
+      return redisClient.zrange(key, start, stop);
+    },
+    zrangebyscore: async (key: RedisKey, min: number, max: number): Promise<string[]> => {
+      return redisClient.zrangebyscore(key, min, max);
+    },
+    zremrangebyscore: async (key: RedisKey, min: number, max: number): Promise<number> => {
+      return redisClient.zremrangebyscore(key, min, max);
+    },
+    zrem: async (key: RedisKey, value: RedisValue): Promise<number> => {
+      return redisClient.zrem(key, value);
+    },
+    expire: async (key: RedisKey, seconds: number): Promise<void> => {
+      await redisClient.expire(key, seconds);
     },
   };
 });
