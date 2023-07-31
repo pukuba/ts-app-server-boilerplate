@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from "graphql";
+import { match } from "ts-pattern";
 import { getPathFromResolveInfo } from "./info";
 import { AuthenticationErrorCase, ErrorResolvers } from "@graphql/__generated__/typings";
 
@@ -31,12 +32,23 @@ export const createErrorWithSuggestion = (message: string, suggestion: string): 
   } as const;
 };
 
-export const createAuthenticationError = (errorCase: AuthenticationErrorCase, suggestion: string): GraphQLAuthenticationError => {
+const matchAuthenticationErrorSuggestions = (error: AuthenticationErrorCase): string => {
+  return match(error)
+    .with(AuthenticationErrorCase.Expired, () => "Your token has expired. Please log in again.")
+    .with(AuthenticationErrorCase.InvalidToken, () => "The provided token is invalid. Please log in again.")
+    .with(AuthenticationErrorCase.BlacklistedToken, () => "Your token has been ended. Please log in again.")
+    .with(AuthenticationErrorCase.NonExistentUser, () => "The user associated with this token does not exist. Please log in with a valid account.")
+    .with(AuthenticationErrorCase.MissingAuthToken, () => "No authentication token found. Please log in.")
+    .with(AuthenticationErrorCase.Unknown, () => "An unknown authentication error occurred. Please try logging in again.")
+    .otherwise(() => "An unexpected error occurred. Please try logging in again.");
+};
+
+export const createAuthenticationError = (errorCase: AuthenticationErrorCase, suggestion?: string): GraphQLAuthenticationError => {
   return {
     message: "Authentication error.",
     resolveType: "AuthenticationError",
     case: errorCase,
-    suggestion,
+    suggestion: suggestion ?? matchAuthenticationErrorSuggestions(errorCase),
     __typename: "AuthenticationError",
   } as const;
 };

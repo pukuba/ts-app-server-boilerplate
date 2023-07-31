@@ -31,9 +31,9 @@ export const getRedisService = _.memoize(async () => {
       mode: "EX" | "PX"; duration: number;
     }): Promise<void> => {
       if (options) {
-        redisClient.set(key, value, "PX", options.mode === "PX" ? options.duration * 1000 : options.duration);
+        await redisClient.set(key, value, "PX", options.mode === "EX" ? options.duration * 1000 : options.duration);
       } else {
-        redisClient.set(key, value);
+        await redisClient.set(key, value);
       }
     },
     mset: async (keyValues: [RedisKey, RedisValue][], options?: {
@@ -72,6 +72,11 @@ export const getRedisService = _.memoize(async () => {
         multi.zadd(key, score, member);
       }
       await multi.exec();
+    },
+    zscore: async (key: RedisKey, member: RedisValue): Promise<number | null> => {
+      const score = await redisClient.zscore(key, member);
+      const scoreNumber = Number(score);
+      return Number.isNaN(scoreNumber) || scoreNumber === 0 ? null : scoreNumber;
     },
     zaddWithZremRangeByScore: async (key: RedisKey, scores: Array<ZAddArguments> | ZAddArguments, min: number, max: number): Promise<void> => {
       const multi = redisClient.multi();

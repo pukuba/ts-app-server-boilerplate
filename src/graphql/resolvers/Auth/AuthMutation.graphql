@@ -1,0 +1,21 @@
+type Mutation {
+  """
+  Logs out the currently authenticated user.
+  """
+  logout: LogoutResult! @auth
+}
+
+"""
+Payload for the logout mutation.
+"""
+type LogoutPayload {
+  """
+  The user who logged out.
+  """
+  user: User!
+}
+
+"""
+The result of the logout mutation.
+"""
+union LogoutResult = LogoutPayload | AuthenticationError

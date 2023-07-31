@@ -11,7 +11,7 @@ import { User } from "~/services/__generated__/prisma";
 const createRefreshToken = async (user: User, context: MercuriusContext): Promise<string> => {
   const uuid = hyperid().uuid;
   const now = getCurrentTimestampInSeconds();
-  await context.redis.zaddWithZremRangeByScore(REFRESH_TOKEN_KEY(user.id), { member: uuid, score: now + FriendlySeconds.HALF_DAY }, 0, now)
+  await context.redis.zaddWithZremRangeByScore(REFRESH_TOKEN_KEY(user.id), { member: uuid, score: now + FriendlySeconds.HALF_DAY }, 0, now - FriendlySeconds.ONE_MINUTE * 60)
     .then(async () => context.redis.expire(REFRESH_TOKEN_KEY(user.id), FriendlySeconds.HALF_DAY));
   return `${user.id}${uuid}`;
 };

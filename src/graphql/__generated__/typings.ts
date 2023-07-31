@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-import { GraphQLError, GraphQLErrorWithSuggestion } from '../utils';
+import { GraphQLError, GraphQLErrorWithSuggestion, GraphQLAuthenticationError } from '../utils';
 import { User as PrismaUser } from '~/services/__generated__/prisma';
 import { MercuriusContext } from '../types';
 export type Maybe<T> = T | null;
@@ -22,6 +22,31 @@ export type Scalars = {
   Email: { input: any; output: any; }
   ObjectID: { input: any; output: any; }
 };
+
+/** Errors that can occur during authentication. */
+export type AuthenticationError = Error & {
+  __typename?: 'AuthenticationError';
+  /** The type of error that occurred. */
+  case: AuthenticationErrorCase;
+  message: Scalars['String']['output'];
+  /** Suggested actions or corrections for the error. */
+  suggestion: Scalars['String']['output'];
+};
+
+export enum AuthenticationErrorCase {
+  /** The provided authentication token is in the blacklist (i.e., the user has logged out). */
+  BlacklistedToken = 'BLACKLISTED_TOKEN',
+  /** The user is authenticated, but the authentication has expired. */
+  Expired = 'EXPIRED',
+  /** The provided authentication token is invalid. */
+  InvalidToken = 'INVALID_TOKEN',
+  /** There is no 'auth-token' provided in the headers. */
+  MissingAuthToken = 'MISSING_AUTH_TOKEN',
+  /** The user corresponding to the provided authentication token no longer exists. */
+  NonExistentUser = 'NON_EXISTENT_USER',
+  /** Unknown error. */
+  Unknown = 'UNKNOWN'
+}
 
 /** Input type to define the information needed to create a User. */
 export type CreateUserInput = {
@@ -50,10 +75,21 @@ export type Error = {
   message: Scalars['String']['output'];
 };
 
+/** Payload for the logout mutation. */
+export type LogoutPayload = {
+  __typename?: 'LogoutPayload';
+  /** The user who logged out. */
+  user: User;
+};
+
+/** The result of the logout mutation. */
+export type LogoutResult = AuthenticationError | LogoutPayload;
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Mutation to create a new User with the provided input. */
   createUser: CreateUserResult;
+  logout: LogoutResult;
   /** Throw an error */
   throw: Error;
 };
@@ -196,16 +232,19 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping of union types */
 export type ResolversUnionTypes<RefType extends Record<string, unknown>> = {
   CreateUserResult: ( Omit<CreateUserPayload, 'user'> & { user: RefType['User'] } ) | ( GraphQLError ) | ( GraphQLErrorWithSuggestion );
+  LogoutResult: ( GraphQLAuthenticationError ) | ( Omit<LogoutPayload, 'user'> & { user: RefType['User'] } );
 };
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = {
-  Error: ( GraphQLError ) | ( GraphQLErrorWithSuggestion );
+  Error: ( GraphQLAuthenticationError ) | ( GraphQLError ) | ( GraphQLErrorWithSuggestion );
   Node: ( PrismaUser );
 };
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  AuthenticationError: ResolverTypeWrapper<GraphQLAuthenticationError>;
+  AuthenticationErrorCase: AuthenticationErrorCase;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateUserInput: CreateUserInput;
   CreateUserPayload: ResolverTypeWrapper<Omit<CreateUserPayload, 'user'> & { user: ResolversTypes['User'] }>;
@@ -214,6 +253,8 @@ export type ResolversTypes = {
   Email: ResolverTypeWrapper<Scalars['Email']['output']>;
   Error: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Error']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  LogoutPayload: ResolverTypeWrapper<Omit<LogoutPayload, 'user'> & { user: ResolversTypes['User'] }>;
+  LogoutResult: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['LogoutResult']>;
   Mutation: ResolverTypeWrapper<{}>;
   Node: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Node']>;
   ObjectID: ResolverTypeWrapper<Scalars['ObjectID']['output']>;
@@ -226,6 +267,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  AuthenticationError: GraphQLAuthenticationError;
   Boolean: Scalars['Boolean']['output'];
   CreateUserInput: CreateUserInput;
   CreateUserPayload: Omit<CreateUserPayload, 'user'> & { user: ResolversParentTypes['User'] };
@@ -234,6 +276,8 @@ export type ResolversParentTypes = {
   Email: Scalars['Email']['output'];
   Error: ResolversInterfaceTypes<ResolversParentTypes>['Error'];
   ID: Scalars['ID']['output'];
+  LogoutPayload: Omit<LogoutPayload, 'user'> & { user: ResolversParentTypes['User'] };
+  LogoutResult: ResolversUnionTypes<ResolversParentTypes>['LogoutResult'];
   Mutation: {};
   Node: ResolversInterfaceTypes<ResolversParentTypes>['Node'];
   ObjectID: Scalars['ObjectID']['output'];
@@ -242,6 +286,17 @@ export type ResolversParentTypes = {
   UnknownError: GraphQLError;
   User: PrismaUser;
   UserDuplicateError: GraphQLErrorWithSuggestion;
+};
+
+export type AuthDirectiveArgs = { };
+
+export type AuthDirectiveResolver<Result, Parent, ContextType = MercuriusContext, Args = AuthDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type AuthenticationErrorResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['AuthenticationError'] = ResolversParentTypes['AuthenticationError']> = {
+  case?: Resolver<ResolversTypes['AuthenticationErrorCase'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  suggestion?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CreateUserPayloadResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['CreateUserPayload'] = ResolversParentTypes['CreateUserPayload']> = {
@@ -264,12 +319,22 @@ export interface EmailScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 }
 
 export type ErrorResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = {
-  __resolveType: TypeResolveFn<'UnknownError' | 'UserDuplicateError', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'AuthenticationError' | 'UnknownError' | 'UserDuplicateError', ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
+export type LogoutPayloadResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['LogoutPayload'] = ResolversParentTypes['LogoutPayload']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type LogoutResultResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['LogoutResult'] = ResolversParentTypes['LogoutResult']> = {
+  __resolveType: TypeResolveFn<'AuthenticationError' | 'LogoutPayload', ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['CreateUserResult'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
+  logout?: Resolver<ResolversTypes['LogoutResult'], ParentType, ContextType>;
   throw?: Resolver<ResolversTypes['Error'], ParentType, ContextType>;
 };
 
@@ -310,11 +375,14 @@ export type UserDuplicateErrorResolvers<ContextType = MercuriusContext, ParentTy
 };
 
 export type Resolvers<ContextType = MercuriusContext> = {
+  AuthenticationError?: AuthenticationErrorResolvers<ContextType>;
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   CreateUserResult?: CreateUserResultResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Email?: GraphQLScalarType;
   Error?: ErrorResolvers<ContextType>;
+  LogoutPayload?: LogoutPayloadResolvers<ContextType>;
+  LogoutResult?: LogoutResultResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Node?: NodeResolvers<ContextType>;
   ObjectID?: GraphQLScalarType;
@@ -324,3 +392,6 @@ export type Resolvers<ContextType = MercuriusContext> = {
   UserDuplicateError?: UserDuplicateErrorResolvers<ContextType>;
 };
 
+export type DirectiveResolvers<ContextType = MercuriusContext> = {
+  auth?: AuthDirectiveResolver<any, any, ContextType>;
+};

@@ -5,6 +5,7 @@ import { Query } from "./Query";
 import { Mutation } from "./Mutation";
 import { UserMutation, User } from "./User";
 import { Node, NodeQueries } from "./Node";
+import { AuthMutation } from "./Auth";
 
 import { Error, UnknownError } from "./Error";
 
@@ -16,6 +17,7 @@ export const resolvers: Resolvers = {
   Mutation: {
     ...Mutation,
     ...UserMutation,
+    ...AuthMutation,
   },
   Error,
   UnknownError,

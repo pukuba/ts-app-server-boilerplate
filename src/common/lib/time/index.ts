@@ -18,3 +18,5 @@ export enum FriendlyMilliSeconds {
 }
 
 export const getCurrentTimestampInSeconds = (): number => parseInt((new Date().getTime() / 1000).toString(), 10);
+
+export const dateToTimestampInSeconds = (date: Date): number => parseInt((date.getTime() / 1000).toString(), 10);

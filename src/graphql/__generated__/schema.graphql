@@ -3,6 +3,36 @@ schema {
   mutation: Mutation
 }
 
+directive @auth on FIELD_DEFINITION | OBJECT
+
+"""Errors that can occur during authentication."""
+type AuthenticationError implements Error {
+  """The type of error that occurred."""
+  case: AuthenticationErrorCase!
+  message: String!
+  """Suggested actions or corrections for the error."""
+  suggestion: String!
+}
+
+enum AuthenticationErrorCase {
+  """
+  The provided authentication token is in the blacklist (i.e., the user has logged out).
+  """
+  BLACKLISTED_TOKEN
+  """The user is authenticated, but the authentication has expired."""
+  EXPIRED
+  """The provided authentication token is invalid."""
+  INVALID_TOKEN
+  """There is no 'auth-token' provided in the headers."""
+  MISSING_AUTH_TOKEN
+  """
+  The user corresponding to the provided authentication token no longer exists.
+  """
+  NON_EXISTENT_USER
+  """Unknown error."""
+  UNKNOWN
+}
+
 """Input type to define the information needed to create a User."""
 input CreateUserInput {
   """The email of the User to be created."""
@@ -39,12 +69,22 @@ interface Error {
   message: String!
 }
 
+"""Payload for the logout mutation."""
+type LogoutPayload {
+  """The user who logged out."""
+  user: User!
+}
+
+"""The result of the logout mutation."""
+union LogoutResult = AuthenticationError | LogoutPayload
+
 type Mutation {
   """Mutation to create a new User with the provided input."""
   createUser(
     """The input needed to create a new User."""
     input: CreateUserInput!
   ): CreateUserResult!
+  logout: LogoutResult! @auth
   """Throw an error"""
   throw: Error!
 }

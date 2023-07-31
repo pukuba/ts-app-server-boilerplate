@@ -21,7 +21,7 @@ const handlePesatoError = (error: PasetoErrors): PasetoErrors => {
 };
 
 type ExpiresIn = `${number} ${"s" | "m" | "h" | "d"}`;
-type PayloadWithIatAndExp<T> = T & { iat: DateISO; exp: DateISO; };
+export type PayloadWithIatAndExp<T> = T & { iat: DateISO; exp: DateISO; };
 
 export const encrypt = async <T extends Record<PropertyKey, unknown>>(payload: T, expiresIn?: ExpiresIn): Promise<string> => {
   return paseto.encrypt(payload, getConstant("TOKEN_PRIVATE_KEY"), { expiresIn });
