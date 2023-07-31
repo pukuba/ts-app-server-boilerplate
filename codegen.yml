@@ -20,6 +20,7 @@ generates:
       mappers:
         UnknownError: ../utils#GraphQLError
         UserDuplicateError: ../utils#GraphQLErrorWithSuggestion
+        AuthenticationError: ../utils#GraphQLAuthenticationError
         User: ~/services/__generated__/prisma#User as PrismaUser
       scalars:
         DateTime: Date|string
@@ -27,6 +28,8 @@ generates:
     overwrite: true
     schema:
       - ./src/graphql/resolvers/**/*.graphql
+    config:
+      includeDirectives: true
     plugins:
       - add:
           content: |
