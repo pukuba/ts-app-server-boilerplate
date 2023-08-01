@@ -1,9 +1,29 @@
 type Mutation {
   """
-  Logs out the currently authenticated user.
+  Logs out the user and deactivates the token.
   """
   logout: LogoutResult! @auth
+
+  """
+  Issues a new access token using a refresh token.
+  """
+  refreshAccessToken: RefreshAccessTokenResult!
 }
+
+"""
+Payload for the refreshAccessToken mutation.
+"""
+type RefreshAccessTokenPayload {
+  """
+  The new access token.
+  """
+  accessToken: String!
+}
+
+"""
+The result of the refreshAccessToken mutation.
+"""
+union RefreshAccessTokenResult = RefreshAccessTokenPayload | AuthenticationError
 
 """
 Payload for the logout mutation.

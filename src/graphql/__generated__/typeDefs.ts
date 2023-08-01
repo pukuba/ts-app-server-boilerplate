@@ -86,7 +86,10 @@ type Mutation {
     """The input needed to create a new User."""
     input: CreateUserInput!
   ): CreateUserResult!
+  """Logs out the user and deactivates the token."""
   logout: LogoutResult! @auth
+  """Issues a new access token using a refresh token."""
+  refreshAccessToken: RefreshAccessTokenResult! @auth
   """Throw an error"""
   throw: Error!
 }
@@ -110,6 +113,15 @@ type Query {
   """
   ping: Boolean!
 }
+
+"""Payload for the refreshAccessToken mutation."""
+type RefreshAccessTokenPayload {
+  """The new access token."""
+  accessToken: String!
+}
+
+"""The result of the refreshAccessToken mutation."""
+union RefreshAccessTokenResult = AuthenticationError | RefreshAccessTokenPayload
 
 """
 UnknownError represents a type of error that cannot be categorized into a more specific type.

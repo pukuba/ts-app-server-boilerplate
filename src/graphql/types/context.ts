@@ -9,3 +9,5 @@ export type MercuriusContext = {
   redis: RedisService;
   viewer: ReturnType<typeof getUserByContext>;
 };
+
+export type UserWithTokenPayload = NonNullable<Awaited<ReturnType<ReturnType<typeof getUserByContext>>>[1]>;

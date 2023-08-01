@@ -89,7 +89,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Mutation to create a new User with the provided input. */
   createUser: CreateUserResult;
+  /** Logs out the user and deactivates the token. */
   logout: LogoutResult;
+  /** Issues a new access token using a refresh token. */
+  refreshAccessToken: RefreshAccessTokenResult;
   /** Throw an error */
   throw: Error;
 };
@@ -120,6 +123,16 @@ export type Query = {
 export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
 };
+
+/** Payload for the refreshAccessToken mutation. */
+export type RefreshAccessTokenPayload = {
+  __typename?: 'RefreshAccessTokenPayload';
+  /** The new access token. */
+  accessToken: Scalars['String']['output'];
+};
+
+/** The result of the refreshAccessToken mutation. */
+export type RefreshAccessTokenResult = AuthenticationError | RefreshAccessTokenPayload;
 
 /**
  * UnknownError represents a type of error that cannot be categorized into a more specific type.
@@ -233,6 +246,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversUnionTypes<RefType extends Record<string, unknown>> = {
   CreateUserResult: ( Omit<CreateUserPayload, 'user'> & { user: RefType['User'] } ) | ( GraphQLError ) | ( GraphQLErrorWithSuggestion );
   LogoutResult: ( GraphQLAuthenticationError ) | ( Omit<LogoutPayload, 'user'> & { user: RefType['User'] } );
+  RefreshAccessTokenResult: ( GraphQLAuthenticationError ) | ( RefreshAccessTokenPayload );
 };
 
 /** Mapping of interface types */
@@ -259,6 +273,8 @@ export type ResolversTypes = {
   Node: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Node']>;
   ObjectID: ResolverTypeWrapper<Scalars['ObjectID']['output']>;
   Query: ResolverTypeWrapper<{}>;
+  RefreshAccessTokenPayload: ResolverTypeWrapper<RefreshAccessTokenPayload>;
+  RefreshAccessTokenResult: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['RefreshAccessTokenResult']>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   UnknownError: ResolverTypeWrapper<GraphQLError>;
   User: ResolverTypeWrapper<PrismaUser>;
@@ -282,6 +298,8 @@ export type ResolversParentTypes = {
   Node: ResolversInterfaceTypes<ResolversParentTypes>['Node'];
   ObjectID: Scalars['ObjectID']['output'];
   Query: {};
+  RefreshAccessTokenPayload: RefreshAccessTokenPayload;
+  RefreshAccessTokenResult: ResolversUnionTypes<ResolversParentTypes>['RefreshAccessTokenResult'];
   String: Scalars['String']['output'];
   UnknownError: GraphQLError;
   User: PrismaUser;
@@ -335,6 +353,7 @@ export type LogoutResultResolvers<ContextType = MercuriusContext, ParentType ext
 export type MutationResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['CreateUserResult'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
   logout?: Resolver<ResolversTypes['LogoutResult'], ParentType, ContextType>;
+  refreshAccessToken?: Resolver<ResolversTypes['RefreshAccessTokenResult'], ParentType, ContextType>;
   throw?: Resolver<ResolversTypes['Error'], ParentType, ContextType>;
 };
 
@@ -350,6 +369,15 @@ export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 export type QueryResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id'>>;
   ping?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+};
+
+export type RefreshAccessTokenPayloadResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['RefreshAccessTokenPayload'] = ResolversParentTypes['RefreshAccessTokenPayload']> = {
+  accessToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type RefreshAccessTokenResultResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['RefreshAccessTokenResult'] = ResolversParentTypes['RefreshAccessTokenResult']> = {
+  __resolveType: TypeResolveFn<'AuthenticationError' | 'RefreshAccessTokenPayload', ParentType, ContextType>;
 };
 
 export type UnknownErrorResolvers<ContextType = MercuriusContext, ParentType extends ResolversParentTypes['UnknownError'] = ResolversParentTypes['UnknownError']> = {
@@ -387,6 +415,8 @@ export type Resolvers<ContextType = MercuriusContext> = {
   Node?: NodeResolvers<ContextType>;
   ObjectID?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
+  RefreshAccessTokenPayload?: RefreshAccessTokenPayloadResolvers<ContextType>;
+  RefreshAccessTokenResult?: RefreshAccessTokenResultResolvers<ContextType>;
   UnknownError?: UnknownErrorResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserDuplicateError?: UserDuplicateErrorResolvers<ContextType>;
