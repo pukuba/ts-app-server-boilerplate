@@ -35,7 +35,6 @@ export const getUserByContext = (redis: RedisService, prismaService: PrismaServi
         .with(P.union(
           P.instanceOf(PasetoNotSupported),
           P.instanceOf(PasetoDecryptionFailed),
-          P.instanceOf(PasetoNotSupported),
           P.instanceOf(PasetoError),
           P.instanceOf(Error),
         ), () => AuthenticationErrorCase.Unknown)
